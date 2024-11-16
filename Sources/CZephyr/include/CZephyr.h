@@ -11,6 +11,7 @@
 #include <zephyr/cache.h>
 #include <zephyr/fatal.h>
 #include <zephyr/init.h>
+#include <zephyr/net_buf.h>
 
 // Bluetooth
 #include <zephyr/bluetooth/bluetooth.h>
