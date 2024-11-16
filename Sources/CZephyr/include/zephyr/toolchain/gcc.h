@@ -576,7 +576,7 @@ do {                                                                    \
 		"\n\t.type\t" #name ",#object")
 
 #else
-#error processor architecture not supported
+//#error processor architecture not supported
 #endif
 
 #define compiler_barrier() do { \
