@@ -24,3 +24,4 @@
 #include <zephyr/bluetooth/hci.h>
 #include <zephyr/bluetooth/l2cap.h>
 #include <zephyr/bluetooth/crypto.h>
+#include <zephyr/bluetooth/conn.h>
