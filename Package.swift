@@ -55,7 +55,7 @@ let package = Package(
                 )
             ],
             swiftSettings: [
-                //.enableUpcomingFeature("Embedded")
+                .enableUpcomingFeature("Embedded")
             ]
         ),
         .target(
@@ -63,7 +63,14 @@ let package = Package(
         ),
         .testTarget(
             name: "ZephyrTests",
-            dependencies: ["Zephyr"]
+            dependencies: [
+                "Bluetooth",
+                "Zephyr",
+                "ZephyrBluetooth"
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("Embedded")
+            ]
         ),
     ]
 )
