@@ -17,13 +17,21 @@ let package = Package(
         .package(
             url: "https://github.com/PureSwift/GATT.git",
             branch: "master"
+        ),
+        .package(
+            url: "https://github.com/Apple/swift-system.git",
+            from: "1.4.0"
         )
     ],
     targets: [
         .target(
             name: "Zephyr",
             dependencies: [
-                "CZephyr"
+                "CZephyr",
+                .product(
+                    name: "SystemPackage",
+                    package: "swift-system"
+                )
             ],
             swiftSettings: [
                 .enableUpcomingFeature("Embedded")
@@ -52,6 +60,10 @@ let package = Package(
                 .product(
                     name: "GATT",
                     package: "GATT"
+                ),
+                .product(
+                    name: "SystemPackage",
+                    package: "swift-system"
                 )
             ],
             swiftSettings: [
