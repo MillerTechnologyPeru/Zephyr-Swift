@@ -37,7 +37,7 @@ public struct ZephyrBluetooth: ~Copyable {
         try bt_set_name(newValue).throwsError()
     }
     
-    public func send(opcode: UInt16, data: borrowing NetworkBuffer) throws(Errno) -> NetworkBuffer {
+    public func sendCommand(opcode: UInt16, data: borrowing NetworkBuffer) throws(Errno) -> NetworkBuffer {
         assert(isReady)
         var response: UnsafeMutablePointer<net_buf>!
         try data.withUnsafePointer { dataPointer in
@@ -46,10 +46,27 @@ public struct ZephyrBluetooth: ~Copyable {
         return NetworkBuffer(response)
     }
     
-    public func startAdvertisement(
-        parameters: bt_le_adv_param
-    ) {
-        // bt_le_adv_start
+    public func startLowEnergyAdvertisement(
+        parameters: bt_le_adv_param,
+        advertisement: [ZephyrAdvertisementData] = [],
+        scanResponse: [ZephyrAdvertisementData] = []
+    ) throws {
+        var parameters = parameters
+        let code = advertisement._withUnsafeBufferPointer { advertisementBuffer in
+            return scanResponse._withUnsafeBufferPointer { scanResponseBuffer in
+                return bt_le_adv_start(
+                    &parameters,
+                    advertisementBuffer.baseAddress,
+                    advertisementBuffer.count,
+                    scanResponseBuffer.baseAddress,
+                    scanResponseBuffer.count
+                )
+            }
+        }
+        // TODO: Throw error
     }
-        
+    
+    public func stopLowEnergyAdvertisement() throws {
+        bt_le_adv_stop()
+    }
 }
